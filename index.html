@@ -1,0 +1,843 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Pedro tem 2 anos e luta contra um câncer agressivo. Ajude a família a pagar o exame PET Scan CT. Meta: R$ 15.000.">
+  <title>Ajude Pedro Em um Câncer Raro e Seu Exame Pet Scan CT</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Figtree:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --green:       #1A8C52;
+      --green-dark:  #136B3E;
+      --green-light: #EBF7F1;
+      --green-mid:   #C3E8D6;
+      --text:        #1A1A1A;
+      --text-2:      #4B5563;
+      --text-muted:  #9CA3AF;
+      --bg:          #FFFFFF;
+      --bg-page:     #F5F5F5;
+      --border:      #E5E7EB;
+      --radius:      10px;
+      --radius-sm:   7px;
+      --ease-out:    cubic-bezier(0.23, 1, 0.32, 1);
+    }
+
+    html { font-size: 16px; -webkit-text-size-adjust: 100%; }
+
+    body {
+      font-family: 'Figtree', system-ui, sans-serif;
+      background: var(--bg-page);
+      color: var(--text);
+      line-height: 1.6;
+      min-height: 100dvh;
+    }
+
+    /* ── Top bar ───────────────────────────────── */
+    .topbar {
+      background: var(--bg);
+      border-bottom: 1px solid var(--border);
+      padding: 0.75rem 1.5rem;
+    }
+
+    .topbar-inner {
+      max-width: 1000px;
+      margin: 0 auto;
+    }
+
+    .page-title {
+      font-size: 1.375rem;
+      font-weight: 800;
+      color: var(--text);
+      line-height: 1.2;
+    }
+
+    /* ── Main wrapper ──────────────────────────── */
+    .page-wrap {
+      max-width: 1000px;
+      margin: 1.5rem auto;
+      padding: 0 1.25rem 3rem;
+    }
+
+    /* ── Two-column grid ───────────────────────── */
+    .two-col {
+      display: grid;
+      grid-template-columns: 1fr 300px;
+      gap: 1.5rem;
+      align-items: start;
+    }
+
+    /* ── Left column ───────────────────────────── */
+    .left-col {
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+    }
+
+    /* ── Photo ─────────────────────────────────── */
+    .photo-wrap {
+      position: relative;
+      width: 100%;
+      aspect-ratio: 7 / 4;
+      border-radius: var(--radius);
+      overflow: hidden;
+      background: var(--green-light);
+    }
+
+    .photo-wrap img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center 15%;
+      display: block;
+    }
+
+    .photo-heart {
+      position: absolute;
+      top: 0.75rem;
+      right: 0.75rem;
+      width: 36px;
+      height: 36px;
+      background: rgba(255,255,255,0.92);
+      border: none;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      transition: transform 160ms var(--ease-out), background 160ms var(--ease-out);
+      box-shadow: 0 1px 6px rgba(0,0,0,.12);
+    }
+    .photo-heart:hover { background: #fff; transform: scale(1.1); }
+    .photo-heart:active { transform: scale(0.95); }
+    .photo-heart svg { width: 18px; height: 18px; }
+
+    /* ── Description ───────────────────────────── */
+    .desc-box {
+      background: var(--bg);
+      border-radius: var(--radius);
+      padding: 1.125rem 1.25rem;
+    }
+
+    .desc-text {
+      font-size: 0.9375rem;
+      color: var(--text-2);
+      line-height: 1.72;
+    }
+
+    .desc-text.clamped {
+      display: -webkit-box;
+      -webkit-line-clamp: 3;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+    }
+
+    .desc-toggle {
+      background: none;
+      border: none;
+      color: var(--green);
+      font-family: inherit;
+      font-size: 0.9375rem;
+      font-weight: 600;
+      cursor: pointer;
+      padding: 0;
+      margin-top: 0.25rem;
+      display: inline-block;
+    }
+    .desc-toggle:hover { color: var(--green-dark); }
+    .desc-toggle:focus-visible { outline: 2px solid var(--green); outline-offset: 2px; border-radius: 3px; }
+
+    /* ── PIX inline box (below description) ── */
+    .pix-inline {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      background: var(--green-light);
+      border: 1.5px solid var(--green-mid);
+      border-radius: var(--radius);
+      padding: 0.875rem 1rem;
+    }
+
+    .pix-inline-icon {
+      flex-shrink: 0;
+      width: 32px;
+      height: 32px;
+      background: var(--green);
+      border-radius: 7px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .pix-inline-icon svg { width: 18px; height: 18px; color: #fff; }
+
+    .pix-inline-text {
+      flex: 1;
+      font-size: 0.875rem;
+      color: var(--text-2);
+      line-height: 1.5;
+    }
+
+    .pix-inline-text strong {
+      display: block;
+      font-size: 0.9375rem;
+      font-weight: 700;
+      color: var(--green-dark);
+      word-break: break-all;
+    }
+
+    .btn-copy-inline {
+      flex-shrink: 0;
+      display: flex;
+      align-items: center;
+      gap: 0.35rem;
+      padding: 0.5rem 0.875rem;
+      background: var(--green);
+      color: #fff;
+      font-family: inherit;
+      font-size: 0.8125rem;
+      font-weight: 600;
+      border: none;
+      border-radius: 7px;
+      cursor: pointer;
+      white-space: nowrap;
+      min-height: 36px;
+      min-width: 44px;
+      transition: background 140ms var(--ease-out), transform 140ms var(--ease-out);
+    }
+    @media (hover: hover) and (pointer: fine) {
+      .btn-copy-inline:hover { background: var(--green-dark); }
+    }
+    .btn-copy-inline:active { transform: scale(0.96); transition-duration: 60ms; }
+    .btn-copy-inline:focus-visible { outline: 3px solid var(--green); outline-offset: 2px; }
+    .btn-copy-inline svg { width: 14px; height: 14px; }
+
+    /* ── Right panel ───────────────────────────── */
+    .right-panel {
+      background: var(--bg);
+      border-radius: var(--radius);
+      padding: 1.375rem;
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+      position: sticky;
+      top: 1.25rem;
+    }
+
+    /* ── Raised section ────────────────────────── */
+    .raised-label {
+      font-size: 0.875rem;
+      font-weight: 600;
+      color: var(--text-2);
+      margin-bottom: 0.25rem;
+    }
+
+    .raised-amount {
+      font-size: 2rem;
+      font-weight: 800;
+      color: var(--green);
+      line-height: 1;
+      letter-spacing: -0.02em;
+      margin-bottom: 0.25rem;
+    }
+
+    .raised-goal {
+      font-size: 0.875rem;
+      color: var(--text-muted);
+    }
+
+    /* ── Stats table ───────────────────────────── */
+    .stats-table {
+      background: var(--green-light);
+      border-radius: var(--radius-sm);
+      overflow: hidden;
+    }
+
+    .stat-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0.625rem 0.875rem;
+      font-size: 0.875rem;
+    }
+
+    .stat-row + .stat-row {
+      border-top: 1px solid var(--green-mid);
+    }
+
+    .stat-label {
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+      color: var(--text-2);
+    }
+
+    .stat-label svg { width: 15px; height: 15px; color: var(--green); }
+
+    .stat-value {
+      font-weight: 700;
+      color: var(--text);
+    }
+
+    /* ── Buttons ───────────────────────────────── */
+    .btn-primary {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 100%;
+      padding: 0.9375rem 1rem;
+      background: var(--green);
+      color: #fff;
+      font-family: inherit;
+      font-size: 1rem;
+      font-weight: 700;
+      border: none;
+      border-radius: 999px;
+      cursor: pointer;
+      min-height: 52px;
+      transition: background 160ms var(--ease-out),
+                  transform 160ms var(--ease-out),
+                  box-shadow 160ms var(--ease-out);
+      box-shadow: 0 3px 14px rgba(26,140,82,.35);
+    }
+    @media (hover: hover) and (pointer: fine) {
+      .btn-primary:hover { background: var(--green-dark); box-shadow: 0 5px 18px rgba(26,140,82,.45); }
+    }
+    .btn-primary:active { transform: scale(0.97); box-shadow: none; transition-duration: 60ms; }
+    .btn-primary:focus-visible { outline: 3px solid var(--green); outline-offset: 3px; }
+
+    .btn-secondary {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 100%;
+      padding: 0.9375rem 1rem;
+      background: var(--bg);
+      color: var(--text);
+      font-family: inherit;
+      font-size: 1rem;
+      font-weight: 700;
+      border: 2px solid var(--border);
+      border-radius: 999px;
+      cursor: pointer;
+      min-height: 52px;
+      text-decoration: none;
+      transition: border-color 160ms var(--ease-out),
+                  color 160ms var(--ease-out),
+                  transform 160ms var(--ease-out);
+    }
+    @media (hover: hover) and (pointer: fine) {
+      .btn-secondary:hover { border-color: var(--text); }
+    }
+    .btn-secondary:active { transform: scale(0.97); transition-duration: 60ms; }
+    .btn-secondary:focus-visible { outline: 3px solid var(--green); outline-offset: 3px; }
+
+    /* ── Protected badge ───────────────────────── */
+    .badge-protected {
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+      justify-content: center;
+    }
+
+    .badge-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.35rem;
+      padding: 0.3125rem 0.6875rem;
+      border: 1.5px solid var(--green-mid);
+      border-radius: 999px;
+      background: var(--green-light);
+      font-size: 0.75rem;
+      font-weight: 700;
+      color: var(--green-dark);
+      letter-spacing: 0.03em;
+    }
+
+    .badge-pill svg { width: 13px; height: 13px; }
+
+    /* ── Date below panel ──────────────────────── */
+    .panel-date {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.35rem;
+      font-size: 0.75rem;
+      color: var(--text-muted);
+      margin-top: -0.25rem;
+    }
+    .panel-date svg { width: 12px; height: 12px; color: var(--green); }
+
+    /* ── Mobile ────────────────────────────────── */
+    @media (max-width: 640px) {
+      .two-col {
+        grid-template-columns: 1fr;
+      }
+
+      .right-panel {
+        position: static;
+        order: -1;
+      }
+
+      .raised-amount { font-size: 1.75rem; }
+    }
+
+    /* ════════════════════════════════════════════
+       PIX MODAL — centered with scale animation
+    ════════════════════════════════════════════ */
+    .modal-backdrop {
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.55);
+      backdrop-filter: blur(5px);
+      -webkit-backdrop-filter: blur(5px);
+      z-index: 100;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 1.25rem;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 240ms var(--ease-out);
+    }
+
+    .modal-backdrop.is-open {
+      opacity: 1;
+      pointer-events: auto;
+    }
+
+    .modal-card {
+      width: 100%;
+      max-width: 440px;
+      background: var(--bg);
+      border-radius: 16px;
+      padding: 2rem 1.75rem 1.75rem;
+      box-shadow: 0 20px 60px rgba(0,0,0,.25), 0 4px 16px rgba(0,0,0,.12);
+      transform: scale(0.88) translateY(12px);
+      opacity: 0;
+      transition: transform 320ms var(--ease-out), opacity 280ms var(--ease-out);
+    }
+
+    .modal-backdrop.is-open .modal-card {
+      transform: scale(1) translateY(0);
+      opacity: 1;
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      .modal-backdrop              { transition: none; }
+      .modal-backdrop.is-open .modal-card { transition: none; transform: none; }
+    }
+
+    .modal-handle { display: none; }
+
+    .modal-heading {
+      font-size: 1.125rem;
+      font-weight: 800;
+      color: var(--text);
+      margin-bottom: 0.25rem;
+    }
+
+    .modal-sub {
+      font-size: 0.875rem;
+      color: var(--text-2);
+      line-height: 1.55;
+      margin-bottom: 1.25rem;
+    }
+
+    .pix-row {
+      display: flex;
+      align-items: center;
+      gap: 0.625rem;
+      background: var(--green-light);
+      border: 1.5px solid var(--green-mid);
+      border-radius: var(--radius-sm);
+      padding: 0.875rem 1rem;
+      margin-bottom: 0.75rem;
+    }
+
+    .pix-key {
+      flex: 1;
+      font-size: 0.9375rem;
+      font-weight: 600;
+      color: var(--green-dark);
+      word-break: break-all;
+    }
+
+    .btn-copy {
+      flex-shrink: 0;
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+      padding: 0.5625rem 1rem;
+      background: var(--green);
+      color: #fff;
+      font-family: inherit;
+      font-size: 0.875rem;
+      font-weight: 600;
+      border: none;
+      border-radius: 7px;
+      cursor: pointer;
+      white-space: nowrap;
+      min-height: 40px;
+      min-width: 44px;
+      transition: background 140ms var(--ease-out), transform 140ms var(--ease-out);
+    }
+    @media (hover: hover) and (pointer: fine) {
+      .btn-copy:hover { background: var(--green-dark); }
+    }
+    .btn-copy:active { transform: scale(0.96); transition-duration: 60ms; }
+    .btn-copy:focus-visible { outline: 3px solid var(--green); outline-offset: 2px; }
+    .btn-copy svg { width: 15px; height: 15px; }
+
+    .pix-note {
+      font-size: 0.8125rem;
+      color: var(--text-muted);
+      line-height: 1.55;
+      margin-bottom: 1.25rem;
+    }
+    .pix-note strong { color: var(--text-2); }
+
+    .btn-close-modal {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 100%;
+      padding: 0.8125rem;
+      background: none;
+      border: 1.5px solid var(--border);
+      border-radius: var(--radius);
+      font-family: inherit;
+      font-size: 0.9375rem;
+      font-weight: 600;
+      color: var(--text-2);
+      cursor: pointer;
+      min-height: 48px;
+      transition: border-color 160ms, color 160ms, transform 160ms;
+    }
+    @media (hover: hover) and (pointer: fine) {
+      .btn-close-modal:hover { border-color: var(--text); color: var(--text); }
+    }
+    .btn-close-modal:active { transform: scale(0.98); }
+    .btn-close-modal:focus-visible { outline: 3px solid var(--green); outline-offset: 2px; }
+  </style>
+</head>
+<body>
+
+  <!-- PIX Modal -->
+  <div
+    class="modal-backdrop"
+    id="modal"
+    role="dialog"
+    aria-modal="true"
+    aria-label="Doe via PIX"
+  >
+    <div class="modal-card" id="modal-card">
+      <div class="modal-handle" aria-hidden="true"></div>
+      <p class="modal-heading">Doe via PIX</p>
+      <p class="modal-sub">Copie a chave abaixo e cole no aplicativo do seu banco para realizar a doação.</p>
+      <div class="pix-row">
+        <span class="pix-key" aria-label="Chave PIX: 6231504 arroba vakinha ponto com ponto br">6231504@vakinha.com.br</span>
+        <button class="btn-copy" id="btn-copy" onclick="copyPix()" aria-label="Copiar chave PIX">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <rect x="9" y="9" width="13" height="13" rx="2" ry="2"/>
+            <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/>
+          </svg>
+          Copiar chave
+        </button>
+      </div>
+      <p class="pix-note">
+        <strong>Banco:</strong> Vakinha &mdash; todo o valor vai direto para a família do Pedro.
+      </p>
+      <button class="btn-close-modal" onclick="closeModal()">Fechar</button>
+    </div>
+  </div>
+
+  <!-- Top bar with title -->
+  <div class="topbar">
+    <div class="topbar-inner">
+      <h1 class="page-title">Ajude Pedro Em um Câncer e Seu Exame Pet Scan CT</h1>
+    </div>
+  </div>
+
+  <!-- Main content -->
+  <div class="page-wrap">
+    <div class="two-col">
+
+      <!-- LEFT: photo + description -->
+      <div class="left-col">
+
+        <div class="photo-wrap">
+          <img
+            src="pedro.webp"
+            alt="Pedro, 2 anos, usando camiseta vermelha, sorrindo no jardim"
+            width="700"
+            height="400"
+            fetchpriority="high"
+          >
+          <button class="photo-heart" aria-label="Curtir campanha" onclick="toggleHeart(this)">
+            <svg id="heart-svg" viewBox="0 0 24 24" fill="none" stroke="#9CA3AF" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/>
+            </svg>
+          </button>
+        </div>
+
+        <div class="desc-box">
+          <p class="desc-text clamped" id="desc-text">
+            Olá! Como é de conhecimento, meu filho Pedro de 2 anos está lutando contra um câncer muito agressivo. Para que ele consiga tomar a medicação de uma pesquisa na qual ele foi aceito, precisamos pagar um exame chamado PET Scan CT que o convênio não cobriu. Nós pegamos empréstimo com o banco para fazer o exame porque era urgente para iniciar a medicação e agora precisamos de ajuda para pagar isso. Além disso, mudamos para São Paulo para fazer o tratamento no GRAACC, eu e minha esposa largamos trabalho para tratá-lo aqui por alguns meses e precisamos de dinheiro para subsistência. Qualquer valor nos ajuda. Obrigado por nos ajudar a manter a fé.
+          </p>
+          <button class="desc-toggle" id="desc-toggle" onclick="toggleDesc()">ver tudo</button>
+        </div>
+
+        <div class="pix-inline">
+          <div class="pix-inline-icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <rect x="2" y="2" width="9" height="9" rx="1"/><rect x="13" y="2" width="9" height="9" rx="1"/><rect x="2" y="13" width="9" height="9" rx="1"/>
+              <path d="M13 17h2m4 0h-2m-2 0v-2m0 4v-2"/>
+            </svg>
+          </div>
+          <div class="pix-inline-text">
+            Você pode contribuir via Pix usando a chave:
+            <strong>6231504@vakinha.com.br</strong>
+            Qualquer valor já ajuda!
+          </div>
+          <button
+            class="btn-copy-inline"
+            id="btn-copy-inline"
+            onclick="copyPixInline()"
+            aria-label="Copiar chave PIX"
+          >
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <rect x="9" y="9" width="13" height="13" rx="2" ry="2"/>
+              <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/>
+            </svg>
+            Copiar
+          </button>
+        </div>
+
+      </div>
+
+      <!-- RIGHT: donation panel -->
+      <div class="right-panel">
+
+        <div>
+          <p class="raised-label">Arrecadado</p>
+          <p class="raised-amount" aria-label="Zero reais e trinta e sete centavos">R$ 0,37</p>
+          <p class="raised-goal">de R$ 15.000,00</p>
+        </div>
+
+        <div class="stats-table" role="region" aria-label="Estatísticas">
+          <div class="stat-row">
+            <span class="stat-label">
+              <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/>
+              </svg>
+              Corações Recebidos
+            </span>
+            <span class="stat-value" id="heart-count">0</span>
+          </div>
+        </div>
+
+        <button class="btn-primary" onclick="openModal()" aria-haspopup="dialog">
+          Quero Ajudar
+        </button>
+
+        <a
+          href="https://wa.me/?text=Ajude%20o%20Pedro%2C%202%20anos%2C%20a%20vencer%20o%20c%C3%A2ncer!%20Chave%20PIX%3A%206231504%40vakinha.com.br%20%E2%80%94%20qualquer%20valor%20ajuda!"
+          class="btn-secondary"
+          target="_blank"
+          rel="noopener noreferrer"
+          aria-label="Compartilhar no WhatsApp"
+        >
+          <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" width="18" height="18" style="flex-shrink:0">
+            <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 0 1-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 0 1-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 0 1 2.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0 0 12.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 0 0 5.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 0 0-3.48-8.413Z"/>
+          </svg>
+          Compartilhar
+        </a>
+
+        <div class="badge-protected">
+          <span class="badge-pill">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+            </svg>
+            DOAÇÃO PROTEGIDA
+          </span>
+        </div>
+
+      </div>
+      <!-- end right panel -->
+
+    </div>
+    <!-- end two-col -->
+
+    <p class="panel-date" style="margin-top:0.75rem;">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+        <circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/>
+      </svg>
+      Campanha iniciada em 15 de novembro de 2026
+    </p>
+
+  </div>
+
+  <script>
+    /* ── Icons ──────────────────────────────── */
+    var COPY_ICON  = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" width="15" height="15"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>';
+    var CHECK_ICON = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" width="15" height="15"><polyline points="20 6 9 17 4 12"/></svg>';
+
+    /* ── Description toggle ─────────────────── */
+    var descExpanded = false;
+    function toggleDesc() {
+      var el  = document.getElementById('desc-text');
+      var btn = document.getElementById('desc-toggle');
+      descExpanded = !descExpanded;
+      el.classList.toggle('clamped', !descExpanded);
+      btn.textContent = descExpanded ? 'ver menos' : 'ver tudo';
+    }
+
+    /* ── Heart counter (persisted in localStorage) ── */
+    var HEART_KEY = 'pedro_hearts';
+
+    function initHearts() {
+      var count  = parseInt(localStorage.getItem(HEART_KEY) || '0', 10);
+      var liked  = localStorage.getItem(HEART_KEY + '_liked') === '1';
+      var counter = document.getElementById('heart-count');
+      var svg     = document.querySelector('.photo-heart svg');
+      if (counter) counter.textContent = count;
+      if (svg && liked) {
+        svg.setAttribute('fill', '#ef4444');
+        svg.setAttribute('stroke', '#ef4444');
+      }
+    }
+
+    function toggleHeart(btn) {
+      var svg   = btn.querySelector('svg');
+      var liked = localStorage.getItem(HEART_KEY + '_liked') === '1';
+      var count = parseInt(localStorage.getItem(HEART_KEY) || '0', 10);
+
+      if (liked) {
+        count = Math.max(0, count - 1);
+        svg.setAttribute('fill', 'none');
+        svg.setAttribute('stroke', '#9CA3AF');
+        localStorage.removeItem(HEART_KEY + '_liked');
+      } else {
+        count += 1;
+        svg.setAttribute('fill', '#ef4444');
+        svg.setAttribute('stroke', '#ef4444');
+        localStorage.setItem(HEART_KEY + '_liked', '1');
+        btn.style.transform = 'scale(1.35)';
+        setTimeout(function() { btn.style.transform = ''; }, 220);
+      }
+
+      localStorage.setItem(HEART_KEY, String(count));
+      var counter = document.getElementById('heart-count');
+      if (counter) counter.textContent = count;
+    }
+
+    initHearts();
+
+    /* ── Modal ──────────────────────────────── */
+    var modal     = document.getElementById('modal');
+    var modalCard = document.getElementById('modal-card');
+    var lastFocus = null;
+
+    function openModal() {
+      lastFocus = document.activeElement;
+      modal.classList.add('is-open');
+      document.body.style.overflow = 'hidden';
+      setTimeout(function() {
+        var copyBtn = document.getElementById('btn-copy');
+        if (copyBtn) copyBtn.focus();
+      }, 340);
+    }
+
+    function closeModal() {
+      modal.classList.remove('is-open');
+      document.body.style.overflow = '';
+      if (lastFocus) lastFocus.focus();
+      /* reset copy button after animation ends */
+      setTimeout(function() {
+        var btn = document.getElementById('btn-copy');
+        if (btn) {
+          btn.innerHTML = COPY_ICON + ' Copiar chave';
+          btn.style.background = '';
+        }
+      }, 300);
+    }
+
+    /* close on backdrop click (outside the card) */
+    modal.addEventListener('click', function(e) {
+      if (!modalCard.contains(e.target)) closeModal();
+    });
+
+    /* stop card clicks from bubbling to backdrop */
+    modalCard.addEventListener('click', function(e) {
+      e.stopPropagation();
+    });
+
+    /* close on Escape key */
+    document.addEventListener('keydown', function(e) {
+      if (e.key === 'Escape' && modal.classList.contains('is-open')) closeModal();
+    });
+
+    /* ── Copy PIX ───────────────────────────── */
+    function copyPix() {
+      var key = '6231504@vakinha.com.br';
+      var btn = document.getElementById('btn-copy');
+      if (!btn) return;
+
+      function showCopied() {
+        btn.innerHTML = CHECK_ICON + ' Copiado!';
+        btn.style.background = 'var(--green-dark)';
+        setTimeout(function() {
+          btn.innerHTML = COPY_ICON + ' Copiar chave';
+          btn.style.background = '';
+        }, 2500);
+      }
+
+      if (navigator.clipboard && navigator.clipboard.writeText) {
+        navigator.clipboard.writeText(key).then(showCopied).catch(function() {
+          fallbackCopy(key, showCopied);
+        });
+      } else {
+        fallbackCopy(key, showCopied);
+      }
+    }
+
+    function copyPixInline() {
+      var key = '6231504@vakinha.com.br';
+      var btn = document.getElementById('btn-copy-inline');
+      if (!btn) return;
+
+      function showCopied() {
+        var orig = btn.innerHTML;
+        btn.innerHTML = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" width="14" height="14"><polyline points="20 6 9 17 4 12"/></svg> Copiado!';
+        btn.style.background = 'var(--green-dark)';
+        setTimeout(function() {
+          btn.innerHTML = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" width="14" height="14"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg> Copiar';
+          btn.style.background = '';
+        }, 2500);
+      }
+
+      if (navigator.clipboard && navigator.clipboard.writeText) {
+        navigator.clipboard.writeText(key).then(showCopied).catch(function() { fallbackCopy(key, showCopied); });
+      } else {
+        fallbackCopy(key, showCopied);
+      }
+    }
+
+    function fallbackCopy(text, cb) {
+      var el = document.createElement('textarea');
+      el.value = text;
+      el.setAttribute('readonly', '');
+      el.style.cssText = 'position:absolute;left:-9999px;top:-9999px';
+      document.body.appendChild(el);
+      el.select();
+      try { document.execCommand('copy'); cb(); } catch(err) {}
+      document.body.removeChild(el);
+    }
+  </script>
+</body>
+</html>
